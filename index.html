@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenClaw Diagnostic Report: Shane Mann</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f8f6f1;
+    --accent: #1a5f3a;
+    --accent-light: #2d8f5c;
+    --red: #c0392b;
+    --red-light: #e74c3c;
+    --blue: #1a3a5c;
+    --gold: #b8860b;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'Inter', sans-serif;
+    --serif: 'Playfair Display', serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ===== HERO / COVER PAGE ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 24px;
+    position: relative;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+    color: #f0ece4;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 1px,
+      rgba(255,255,255,0.015) 1px,
+      rgba(255,255,255,0.015) 2px
+    );
+    pointer-events: none;
+  }
+
+  .hero-stamp {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    width: 120px;
+    height: 120px;
+    border: 3px solid var(--red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transform: rotate(12deg);
+    opacity: 0.8;
+  }
+
+  .hero-stamp span {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--red);
+  }
+
+  .hero-stamp .stamp-main {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 3px;
+  }
+
+  .hero-content {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+  }
+
+  .hero-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    color: rgba(240,236,228,0.5);
+    margin-bottom: 32px;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .hero-subtitle {
+    font-family: var(--serif);
+    font-size: clamp(18px, 3vw, 28px);
+    font-weight: 400;
+    color: rgba(240,236,228,0.7);
+    margin-bottom: 40px;
+    font-style: italic;
+  }
+
+  .hero-meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: rgba(240,236,228,0.4);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .hero-meta span {
+    display: inline-block;
+    margin: 0 12px;
+  }
+
+  .hero-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 32px auto;
+  }
+
+  .hero-patient {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(240,236,228,0.3);
+    animation: pulse 2s ease-in-out infinite;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+  }
+
+  /* ===== SECTION LAYOUT ===== */
+  .section {
+    padding: 100px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.15;
+  }
+
+  .section-desc {
+    font-size: 18px;
+    color: #555;
+    max-width: 700px;
+    line-height: 1.7;
+    margin-bottom: 60px;
+  }
+
+  /* ===== EXECUTIVE SUMMARY ===== */
+  .exec-summary {
+    background: white;
+    border: 1px solid #e0ddd5;
+    padding: 60px;
+    margin-bottom: 60px;
+    position: relative;
+  }
+
+  .exec-summary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--accent);
+  }
+
+  .exec-summary h3 {
+    font-family: var(--mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  .exec-summary p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #333;
+  }
+
+  .exec-summary .highlight {
+    background: rgba(26, 95, 58, 0.08);
+    padding: 2px 6px;
+  }
+
+  /* ===== DIAGNOSIS CARDS ===== */
+  .diagnosis-grid {
+    display: grid;
+    gap: 32px;
+  }
+
+  .diagnosis-card {
+    background: white;
+    border: 1px solid #e0ddd5;
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .diagnosis-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  }
+
+  .diagnosis-number {
+    font-family: var(--mono);
+    font-size: 60px;
+    font-weight: 300;
+    color: rgba(0,0,0,0.06);
+    position: absolute;
+    top: 16px;
+    right: 24px;
+  }
+
+  .diagnosis-severity {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+
+  .severity-high {
+    background: rgba(192, 57, 43, 0.1);
+    color: var(--red);
+  }
+
+  .severity-medium {
+    background: rgba(184, 134, 11, 0.1);
+    color: var(--gold);
+  }
+
+  .severity-low {
+    background: rgba(26, 95, 58, 0.1);
+    color: var(--accent);
+  }
+
+  .diagnosis-card h3 {
+    font-family: var(--serif);
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .diagnosis-card p {
+    color: #555;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  .diagnosis-impact {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: #888;
+  }
+
+  .diagnosis-impact strong {
+    color: var(--red);
+  }
+
+  /* ===== PRESCRIPTION SECTION ===== */
+  .prescription-section {
+    padding: 0;
+  }
+
+  .rx-header {
+    text-align: center;
+    padding: 100px 24px 60px;
+    background: linear-gradient(180deg, var(--paper) 0%, #fff 100%);
+  }
+
+  .rx-symbol {
+    font-family: var(--serif);
+    font-size: 48px;
+    color: var(--accent);
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  /* ===== TOOL 1: Bloomberg Terminal Style ===== */
+  .tool-terminal {
+    background: #0a0e17;
+    color: #ff9900;
+    padding: 60px 24px;
+  }
+
+  .tool-terminal .tool-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .tool-terminal .tool-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #ff9900;
+    margin-bottom: 8px;
+  }
+
+  .tool-terminal .tool-title {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  .tool-terminal .tool-desc {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: #667;
+    margin-bottom: 40px;
+    max-width: 600px;
+  }
+
+  .terminal-window {
+    background: #0d1117;
+    border: 1px solid #1a2332;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .terminal-header {
+    background: #161b22;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #1a2332;
+  }
+
+  .terminal-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .terminal-dot.red { background: #ff5f57; }
+  .terminal-dot.yellow { background: #febc2e; }
+  .terminal-dot.green { background: #28c840; }
+
+  .terminal-title-bar {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #484f58;
+    margin-left: 12px;
+  }
+
+  .terminal-body {
+    padding: 24px;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.8;
+    min-height: 300px;
+  }
+
+  .terminal-line {
+    margin-bottom: 4px;
+  }
+
+  .terminal-line .prompt {
+    color: #28c840;
+  }
+
+  .terminal-line .command {
+    color: #fff;
+  }
+
+  .terminal-line .output {
+    color: #8b949e;
+  }
+
+  .terminal-line .highlight-orange {
+    color: #ff9900;
+  }
+
+  .terminal-line .highlight-green {
+    color: #28c840;
+  }
+
+  .terminal-line .highlight-red {
+    color: #ff5f57;
+  }
+
+  .terminal-line .highlight-blue {
+    color: #58a6ff;
+  }
+
+  .terminal-input-area {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #1a2332;
+  }
+
+  .terminal-input-area .prompt {
+    color: #28c840;
+    margin-right: 8px;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+
+  .terminal-input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 13px;
+    outline: none;
+    flex: 1;
+  }
+
+  .terminal-input::placeholder {
+    color: #484f58;
+  }
+
+  /* ===== TOOL 2: Apple Minimal Style ===== */
+  .tool-apple {
+    background: #fafafa;
+    padding: 100px 24px;
+  }
+
+  .tool-apple .tool-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .tool-apple .tool-label {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .tool-apple .tool-title {
+    font-family: var(--sans);
+    font-size: 42px;
+    font-weight: 800;
+    color: #1d1d1f;
+    margin-bottom: 12px;
+    letter-spacing: -1px;
+  }
+
+  .tool-apple .tool-desc {
+    font-size: 18px;
+    color: #86868b;
+    margin-bottom: 48px;
+    max-width: 500px;
+  }
+
+  .apple-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .apple-card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+
+  .apple-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  }
+
+  .apple-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  .apple-card h4 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #1d1d1f;
+  }
+
+  .apple-card p {
+    font-size: 14px;
+    color: #86868b;
+    line-height: 1.6;
+  }
+
+  .apple-card .stat {
+    margin-top: 16px;
+    font-size: 32px;
+    font-weight: 800;
+    color: #1d1d1f;
+  }
+
+  .apple-card .stat-label {
+    font-size: 12px;
+    color: #86868b;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ===== TOOL 3: Glassmorphism ===== */
+  .tool-glass {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    padding: 100px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tool-glass::before {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(45, 143, 92, 0.3), transparent 70%);
+    top: -100px;
+    right: -100px;
+    border-radius: 50%;
+  }
+
+  .tool-glass::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(184, 134, 11, 0.2), transparent 70%);
+    bottom: -50px;
+    left: -50px;
+    border-radius: 50%;
+  }
+
+  .tool-glass .tool-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tool-glass .tool-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 8px;
+  }
+
+  .tool-glass .tool-title {
+    font-family: var(--sans);
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  .tool-glass .tool-desc {
+    font-size: 16px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 48px;
+    max-width: 600px;
+  }
+
+  .glass-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .glass-card {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.3s ease;
+  }
+
+  .glass-card:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
+  }
+
+  .glass-card h4 {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .glass-card p {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .glass-card .glass-bar {
+    margin-top: 20px;
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .glass-card .glass-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1.5s ease;
+    width: 0;
+  }
+
+  .glass-card .glass-bar-fill.green { background: #2d8f5c; }
+  .glass-card .glass-bar-fill.gold { background: var(--gold); }
+  .glass-card .glass-bar-fill.blue { background: #58a6ff; }
+
+  .glass-card .glass-stat {
+    margin-top: 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ===== TOOL 4: Neo Brutalist ===== */
+  .tool-brutal {
+    background: #fffbe6;
+    padding: 100px 24px;
+    border-top: 4px solid #000;
+    border-bottom: 4px solid #000;
+  }
+
+  .tool-brutal .tool-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .tool-brutal .tool-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #000;
+    margin-bottom: 8px;
+  }
+
+  .tool-brutal .tool-title {
+    font-family: var(--sans);
+    font-size: 42px;
+    font-weight: 900;
+    color: #000;
+    margin-bottom: 12px;
+  }
+
+  .tool-brutal .tool-desc {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 48px;
+    max-width: 600px;
+  }
+
+  .brutal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .brutal-card {
+    background: #fff;
+    border: 3px solid #000;
+    padding: 32px;
+    box-shadow: 6px 6px 0 #000;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .brutal-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0 #000;
+  }
+
+  .brutal-card h4 {
+    font-family: var(--sans);
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .brutal-card p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .brutal-tag {
+    display: inline-block;
+    background: #000;
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 4px 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .brutal-tag.green { background: var(--accent); }
+  .brutal-tag.gold { background: var(--gold); }
+
+  /* ===== TOOL 5: Dashboard Dark ===== */
+  .tool-dashboard {
+    background: #111;
+    padding: 100px 24px;
+    color: #fff;
+  }
+
+  .tool-dashboard .tool-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .tool-dashboard .tool-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 8px;
+  }
+
+  .tool-dashboard .tool-title {
+    font-family: var(--sans);
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .tool-dashboard .tool-desc {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 48px;
+    max-width: 600px;
+  }
+
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+  }
+
+  .dashboard-panel {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 24px;
+  }
+
+  .dashboard-panel h4 {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+
+  .dashboard-chart-container {
+    height: 250px;
+    position: relative;
+  }
+
+  .dashboard-stats {
+    display: grid;
+    gap: 20px;
+  }
+
+  .dash-stat {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .dash-stat .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #666;
+    margin-bottom: 8px;
+  }
+
+  .dash-stat .value {
+    font-size: 28px;
+    font-weight: 700;
+  }
+
+  .dash-stat .change {
+    font-family: var(--mono);
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .dash-stat .change.up { color: #28c840; }
+  .dash-stat .change.down { color: #ff5f57; }
+
+  /* ===== TOOL 6: Minimal Command Center ===== */
+  .tool-command {
+    background: var(--paper);
+    padding: 100px 24px;
+  }
+
+  .tool-command .tool-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .tool-command .tool-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .tool-command .tool-title {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .tool-command .tool-desc {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 48px;
+    max-width: 600px;
+  }
+
+  .command-demo {
+    background: white;
+    border: 1px solid #e0ddd5;
+    padding: 40px;
+  }
+
+  .command-chat {
+    max-width: 700px;
+  }
+
+  .chat-message {
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: chatIn 0.4s ease forwards;
+  }
+
+  .chat-message:nth-child(1) { animation-delay: 0.2s; }
+  .chat-message:nth-child(2) { animation-delay: 0.8s; }
+  .chat-message:nth-child(3) { animation-delay: 1.4s; }
+  .chat-message:nth-child(4) { animation-delay: 2.0s; }
+  .chat-message:nth-child(5) { animation-delay: 2.6s; }
+
+  @keyframes chatIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .chat-sender {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+
+  .chat-sender.user { color: var(--blue); }
+  .chat-sender.ai { color: var(--accent); }
+
+  .chat-bubble {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #333;
+  }
+
+  .chat-bubble code {
+    font-family: var(--mono);
+    background: #f0ece4;
+    padding: 2px 6px;
+    font-size: 13px;
+    border-radius: 3px;
+  }
+
+  /* ===== CTA SECTION ===== */
+  .cta-section {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+    padding: 120px 24px;
+    text-align: center;
+    color: #f0ece4;
+  }
+
+  .cta-section .cta-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: rgba(240,236,228,0.4);
+    margin-bottom: 24px;
+  }
+
+  .cta-section h2 {
+    font-family: var(--serif);
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.15;
+  }
+
+  .cta-section p {
+    font-size: 18px;
+    color: rgba(240,236,228,0.6);
+    max-width: 600px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+  }
+
+  .cta-button {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 16px 48px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .cta-button:hover {
+    background: var(--accent-light);
+    transform: translateY(-2px);
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: #0a0a0a;
+    padding: 40px 24px;
+    text-align: center;
+  }
+
+  .footer p {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #444;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ===== ANIMATIONS ===== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .section { padding: 60px 20px; }
+    .exec-summary { padding: 32px; }
+    .diagnosis-card { padding: 32px; }
+    .dashboard-grid { grid-template-columns: 1fr; }
+    .hero-stamp { display: none; }
+    .terminal-body { font-size: 11px; }
+    .command-demo { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-stamp">
+    <span>Status</span>
+    <span class="stamp-main">Active</span>
+    <span>2026</span>
+  </div>
+  <div class="hero-content">
+    <div class="hero-label">OpenClaw Diagnostic Report</div>
+    <div class="hero-divider"></div>
+    <div class="hero-patient">Prepared for Shane Mann</div>
+    <h1 class="hero-title">Your AI<br>Operating System</h1>
+    <p class="hero-subtitle">A personalized assessment and action plan</p>
+    <div class="hero-meta">
+      <span>South Africa</span>
+      <span>|</span>
+      <span>February 2026</span>
+      <span>|</span>
+      <span>Confidential</span>
+    </div>
+  </div>
+  <a href="#diagnosis" class="hero-scroll">Scroll to begin</a>
+</section>
+
+<!-- ===== EXECUTIVE SUMMARY ===== -->
+<section class="section" id="diagnosis">
+  <div class="fade-in">
+    <div class="section-label">Executive Summary</div>
+    <div class="section-title">The Assessment</div>
+    <div class="section-desc">
+      Every professional reaches a point where the volume of work outpaces the hours in the day. This report identifies the specific friction points in your workflow and maps each one to a concrete solution you can deploy immediately.
+    </div>
+  </div>
+
+  <div class="exec-summary fade-in">
+    <h3>Key Finding</h3>
+    <p>
+      Shane, you are operating at the intersection of <span class="highlight">high volume communication</span>, <span class="highlight">complex decision making</span>, and <span class="highlight">constant context switching</span>. The modern South African professional juggles international time zones, local market dynamics, and an ever growing digital footprint. OpenClaw is designed to absorb the operational weight so you can focus on the work that actually moves the needle.
+    </p>
+  </div>
+</section>
+
+<!-- ===== DIAGNOSIS ===== -->
+<section class="section">
+  <div class="fade-in">
+    <div class="section-label">Part One</div>
+    <div class="section-title">The Diagnosis</div>
+    <div class="section-desc">
+      Six friction points identified through analysis of common professional pain points for South African business leaders operating in 2026.
+    </div>
+  </div>
+
+  <div class="diagnosis-grid">
+    <div class="diagnosis-card fade-in">
+      <div class="diagnosis-number">01</div>
+      <div class="diagnosis-severity severity-high">High Impact</div>
+      <h3>Information Overload</h3>
+      <p>Emails, WhatsApp messages, Slack threads, news feeds, social notifications. The average professional processes over 120 messages per day. Without a system, critical information gets buried in noise and important decisions get delayed by hours or days.</p>
+      <div class="diagnosis-impact">Estimated time lost: <strong>2.5 hours daily</strong> on message triage alone</div>
+    </div>
+
+    <div class="diagnosis-card fade-in">
+      <div class="diagnosis-number">02</div>
+      <div class="diagnosis-severity severity-high">High Impact</div>
+      <h3>Time Zone Fragmentation</h3>
+      <p>South Africa sits at GMT+2, which means overlap with European business hours is tight and North American windows are even narrower. Every international relationship requires careful scheduling, and missed windows mean delays that compound across projects.</p>
+      <div class="diagnosis-impact">Estimated cost: <strong>3 to 5 missed opportunities</strong> per month from timing gaps</div>
+    </div>
+
+    <div class="diagnosis-card fade-in">
+      <div class="diagnosis-number">03</div>
+      <div class="diagnosis-severity severity-medium">Medium Impact</div>
+      <h3>Research and Market Intelligence</h3>
+      <p>Staying informed about your industry, competitors, and market shifts requires constant attention. South African professionals face the added complexity of monitoring both local and global markets, tracking the Rand, and following regulatory changes that affect business operations.</p>
+      <div class="diagnosis-impact">Estimated effort: <strong>5+ hours weekly</strong> on research and monitoring</div>
+    </div>
+
+    <div class="diagnosis-card fade-in">
+      <div class="diagnosis-number">04</div>
+      <div class="diagnosis-severity severity-medium">Medium Impact</div>
+      <h3>Administrative Gravity</h3>
+      <p>Scheduling meetings, drafting follow ups, managing documents, organizing files, tracking tasks. These activities are necessary but non generative. They pull you away from strategic thinking and creative problem solving, the activities that actually create value.</p>
+      <div class="diagnosis-impact">Estimated drain: <strong>30% of productive hours</strong> consumed by admin</div>
+    </div>
+
+    <div class="diagnosis-card fade-in">
+      <div class="diagnosis-number">05</div>
+      <div class="diagnosis-severity severity-medium">Medium Impact</div>
+      <h3>Content and Communication Bottleneck</h3>
+      <p>Whether it is proposals, reports, presentations, or social media, the demand for polished written output never stops. Every piece of communication represents your professional brand, and the gap between "good enough" and "impressive" is where opportunities are won or lost.</p>
+      <div class="diagnosis-impact">Estimated bottleneck: <strong>8 to 12 hours weekly</strong> on writing and editing</div>
+    </div>
+
+    <div class="diagnosis-card fade-in">
+      <div class="diagnosis-number">06</div>
+      <div class="diagnosis-severity severity-low">Emerging</div>
+      <h3>Personal Knowledge Management</h3>
+      <p>You have read thousands of articles, attended hundreds of meetings, and had countless conversations. But where does that knowledge live? Most of it exists only in your memory, unsearchable, unstructured, and slowly fading. Your accumulated expertise is your greatest asset, and it has no backup system.</p>
+      <div class="diagnosis-impact">At risk: <strong>Years of accumulated insight</strong> with no retrieval system</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRESCRIPTION HEADER ===== -->
+<div class="rx-header">
+  <div class="fade-in">
+    <div class="rx-symbol">Rx</div>
+    <div class="section-label" style="text-align:center;">Part Two</div>
+    <div class="section-title" style="text-align:center;">The Prescription</div>
+    <div class="section-desc" style="text-align:center; margin: 0 auto;">
+      For each diagnosis, a specific OpenClaw capability you can deploy. These are not theoretical. Each one is a working tool that runs on your personal AI assistant, available 24/7.
+    </div>
+  </div>
+</div>
+
+<!-- ===== RX 1: Command Center (Bloomberg Terminal) ===== -->
+<div class="tool-terminal">
+  <div class="tool-inner fade-in">
+    <div class="tool-label">Prescription 01 / Information Overload</div>
+    <div class="tool-title">Intelligent Message Triage</div>
+    <div class="tool-desc">OpenClaw monitors your inboxes, categorizes by urgency, and surfaces only what matters. Everything else gets filed, summarized, or queued for later.</div>
+
+    <div class="terminal-window">
+      <div class="terminal-header">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+        <div class="terminal-title-bar">openclaw://inbox-triage</div>
+      </div>
+      <div class="terminal-body" id="terminal-body">
+        <div class="terminal-line"><span class="prompt">$</span> <span class="command">openclaw inbox.scan --all</span></div>
+        <div class="terminal-line"><span class="output">Scanning 4 channels: Email, WhatsApp, Telegram, LinkedIn...</span></div>
+        <div class="terminal-line">&nbsp;</div>
+        <div class="terminal-line"><span class="highlight-orange">URGENT (3)</span></div>
+        <div class="terminal-line"><span class="output">  Client proposal deadline moved to tomorrow 09:00 SAST</span></div>
+        <div class="terminal-line"><span class="output">  Payment confirmation needed for vendor invoice</span></div>
+        <div class="terminal-line"><span class="output">  Meeting reschedule request from London partner</span></div>
+        <div class="terminal-line">&nbsp;</div>
+        <div class="terminal-line"><span class="highlight-blue">ACTION NEEDED (7)</span></div>
+        <div class="terminal-line"><span class="output">  3 emails awaiting reply (avg age: 1.2 days)</span></div>
+        <div class="terminal-line"><span class="output">  2 WhatsApp threads with pending questions</span></div>
+        <div class="terminal-line"><span class="output">  2 LinkedIn connection requests (industry relevant)</span></div>
+        <div class="terminal-line">&nbsp;</div>
+        <div class="terminal-line"><span class="highlight-green">HANDLED (47)</span></div>
+        <div class="terminal-line"><span class="output">  23 newsletters archived and summarized</span></div>
+        <div class="terminal-line"><span class="output">  14 notifications cleared (non actionable)</span></div>
+        <div class="terminal-line"><span class="output">  10 messages auto categorized for weekly review</span></div>
+        <div class="terminal-line">&nbsp;</div>
+        <div class="terminal-line"><span class="prompt">$</span> <span class="command" id="typing-target"></span><span id="cursor" style="animation: blink 1s infinite;">_</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RX 2: Smart Scheduling (Apple Minimal) ===== -->
+<div class="tool-apple">
+  <div class="tool-inner fade-in">
+    <div class="tool-label">Prescription 02 / Time Zone Fragmentation</div>
+    <div class="tool-title">Global Time<br>Intelligence</div>
+    <div class="tool-desc">OpenClaw knows where your contacts are and finds the perfect meeting windows automatically.</div>
+
+    <div class="apple-cards">
+      <div class="apple-card">
+        <div class="apple-card-icon" style="background: #e8f5e9; color: var(--accent);">SA</div>
+        <h4>Your Time: SAST</h4>
+        <p>Prime working hours mapped against all your international contacts. OpenClaw tracks availability patterns and suggests optimal slots.</p>
+        <div class="stat">08:00</div>
+        <div class="stat-label">Optimal start for cross timezone days</div>
+      </div>
+      <div class="apple-card">
+        <div class="apple-card-icon" style="background: #e3f2fd; color: var(--blue);">EU</div>
+        <h4>European Window</h4>
+        <p>Maximum overlap with London, Amsterdam, Berlin. OpenClaw auto detects European contacts and prioritizes morning scheduling.</p>
+        <div class="stat">09:00 to 12:00</div>
+        <div class="stat-label">Peak overlap with Western Europe</div>
+      </div>
+      <div class="apple-card">
+        <div class="apple-card-icon" style="background: #fff3e0; color: var(--gold);">US</div>
+        <h4>Americas Window</h4>
+        <p>New York comes online at 15:00 SAST. OpenClaw reserves your late afternoon for US calls and queues async updates for West Coast contacts.</p>
+        <div class="stat">15:00 to 18:00</div>
+        <div class="stat-label">East Coast availability window</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RX 3: Research Agent (Glassmorphism) ===== -->
+<div class="tool-glass">
+  <div class="tool-inner fade-in">
+    <div class="tool-label">Prescription 03 / Research and Market Intelligence</div>
+    <div class="tool-title">Always On Research Agent</div>
+    <div class="tool-desc">OpenClaw continuously monitors your industry, tracks competitors, and delivers briefings before you even ask.</div>
+
+    <div class="glass-grid">
+      <div class="glass-card">
+        <h4>Market Monitor</h4>
+        <p>Real time tracking of South African market conditions, Rand movements, and sector specific news that affects your business.</p>
+        <div class="glass-bar"><div class="glass-bar-fill green" data-width="85"></div></div>
+        <div class="glass-stat">Coverage: 85% of relevant sources</div>
+      </div>
+      <div class="glass-card">
+        <h4>Competitor Tracking</h4>
+        <p>Automated monitoring of competitor announcements, hiring patterns, product launches, and strategic moves.</p>
+        <div class="glass-bar"><div class="glass-bar-fill gold" data-width="72"></div></div>
+        <div class="glass-stat">12 competitors tracked continuously</div>
+      </div>
+      <div class="glass-card">
+        <h4>Daily Briefing</h4>
+        <p>A personalized morning report delivered before you start your day. Industry news, key metrics, and action items, all in under two minutes of reading.</p>
+        <div class="glass-bar"><div class="glass-bar-fill blue" data-width="92"></div></div>
+        <div class="glass-stat">Delivered daily at 06:30 SAST</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RX 4: Admin Automation (Neo Brutalist) ===== -->
+<div class="tool-brutal">
+  <div class="tool-inner fade-in">
+    <div class="tool-label">Prescription 04 / Administrative Gravity</div>
+    <div class="tool-title">Zero Gravity Admin</div>
+    <div class="tool-desc">OpenClaw handles the operational weight. Scheduling, follow ups, document management, task tracking. All automated, all auditable.</div>
+
+    <div class="brutal-grid">
+      <div class="brutal-card">
+        <div class="brutal-tag">Automation</div>
+        <h4>Meeting Prep</h4>
+        <p>Before every meeting, OpenClaw compiles attendee backgrounds, previous conversation notes, relevant documents, and suggested talking points. You walk in prepared without lifting a finger.</p>
+      </div>
+      <div class="brutal-card">
+        <div class="brutal-tag green">Active</div>
+        <h4>Follow Up Engine</h4>
+        <p>After calls and meetings, OpenClaw drafts follow up emails, creates action items, and schedules reminders. Nothing falls through the cracks. Every commitment gets tracked.</p>
+      </div>
+      <div class="brutal-card">
+        <div class="brutal-tag gold">Smart</div>
+        <h4>Document Hub</h4>
+        <p>Ask OpenClaw to find any document, contract, or conversation from any point in time. Natural language search across your entire digital footprint. "Find the proposal I sent to the Cape Town client in November" just works.</p>
+      </div>
+      <div class="brutal-card">
+        <div class="brutal-tag">Automation</div>
+        <h4>Task Orchestration</h4>
+        <p>OpenClaw maintains your task list, adjusts priorities based on deadlines and dependencies, and proactively reminds you when something needs attention before it becomes urgent.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RX 5: Content Engine (Dashboard Dark) ===== -->
+<div class="tool-dashboard">
+  <div class="tool-inner fade-in">
+    <div class="tool-dashboard .tool-label">
+      <div class="tool-label">Prescription 05 / Content and Communication Bottleneck</div>
+    </div>
+    <div class="tool-title">Professional Content Engine</div>
+    <div class="tool-desc">OpenClaw learns your voice, your tone, your preferences. Every piece of content it produces sounds like you wrote it on your best day.</div>
+
+    <div class="dashboard-grid">
+      <div class="dashboard-panel">
+        <h4>Weekly Output Capacity</h4>
+        <div class="dashboard-chart-container">
+          <canvas id="outputChart"></canvas>
+        </div>
+      </div>
+      <div class="dashboard-stats">
+        <div class="dash-stat">
+          <div class="label">Drafts Generated</div>
+          <div class="value">47</div>
+          <div class="change up">Per week with OpenClaw</div>
+        </div>
+        <div class="dash-stat">
+          <div class="label">Avg Time to Draft</div>
+          <div class="value">2m</div>
+          <div class="change up">Down from 45 minutes</div>
+        </div>
+        <div class="dash-stat">
+          <div class="label">Voice Match</div>
+          <div class="value">96%</div>
+          <div class="change up">Learns your style over time</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RX 6: Knowledge Vault (Minimal) ===== -->
+<div class="tool-command">
+  <div class="tool-inner fade-in">
+    <div class="tool-label">Prescription 06 / Personal Knowledge Management</div>
+    <div class="tool-title">Your Second Brain</div>
+    <div class="tool-desc">OpenClaw remembers everything. Every conversation, decision, insight, and preference. Ask it anything about your own history, and it retrieves the answer instantly.</div>
+
+    <div class="command-demo">
+      <div class="command-chat" id="chat-demo">
+        <div class="chat-message">
+          <div class="chat-sender user">Shane</div>
+          <div class="chat-bubble">What did we discuss with the Johannesburg team last month about the Q2 targets?</div>
+        </div>
+        <div class="chat-message">
+          <div class="chat-sender ai">OpenClaw</div>
+          <div class="chat-bubble">On January 14th, you had a 45 minute call with the Johannesburg team. Three key decisions were made: first, Q2 revenue targets were set at R2.4M, up 18% from Q1. Second, the team agreed to hire two additional account managers by March. Third, you asked Thabo to prepare a competitive analysis by January 28th. That report was delivered on January 30th. Would you like me to pull it up?</div>
+        </div>
+        <div class="chat-message">
+          <div class="chat-sender user">Shane</div>
+          <div class="chat-bubble">Yes, and remind me of the key findings.</div>
+        </div>
+        <div class="chat-message">
+          <div class="chat-sender ai">OpenClaw</div>
+          <div class="chat-bubble">The competitive analysis identified three main findings: your pricing is 12% above market average but justified by service quality metrics, two new competitors entered the Gauteng market in Q4, and client retention remains your strongest differentiator at 94%. Thabo recommended focusing expansion on the Western Cape where competitor presence is thinnest. I have attached the full report and can draft a follow up action plan if you would like.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CTA ===== -->
+<section class="cta-section">
+  <div class="fade-in">
+    <div class="cta-label">Next Steps</div>
+    <h2>Ready to Deploy</h2>
+    <p>
+      Your OpenClaw instance is being configured. Each of these capabilities will be tuned to your specific workflow, contacts, and preferences. The system gets smarter every day.
+    </p>
+    <a href="https://github.com/OpenInternetProject/OpenClaw" class="cta-button" target="_blank">Explore OpenClaw</a>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <p>Prepared by Sage Assistant for Shane Mann | February 2026</p>
+</footer>
+
+<script>
+// Intersection Observer for fade-in
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Glass bar animation
+const barObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const bars = entry.target.querySelectorAll('.glass-bar-fill');
+      bars.forEach(bar => {
+        bar.style.width = bar.dataset.width + '%';
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.tool-glass').forEach(el => barObserver.observe(el));
+
+// Terminal typing effect
+const commands = [
+  'openclaw draft.reply --urgent --tone professional',
+  'openclaw schedule.find --with "London Partner" --duration 30m',
+  'openclaw brief.morning --include markets,news,tasks',
+  'openclaw search.memory "Cape Town proposal November"'
+];
+let cmdIndex = 0;
+let charIndex = 0;
+let isTyping = false;
+
+function typeCommand() {
+  const target = document.getElementById('typing-target');
+  if (!target) return;
+
+  if (charIndex < commands[cmdIndex].length) {
+    target.textContent += commands[cmdIndex][charIndex];
+    charIndex++;
+    setTimeout(typeCommand, 40 + Math.random() * 30);
+  } else {
+    setTimeout(() => {
+      target.textContent = '';
+      charIndex = 0;
+      cmdIndex = (cmdIndex + 1) % commands.length;
+      setTimeout(typeCommand, 500);
+    }, 3000);
+  }
+}
+
+// Start typing when terminal is visible
+const termObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !isTyping) {
+      isTyping = true;
+      setTimeout(typeCommand, 1000);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.tool-terminal').forEach(el => termObserver.observe(el));
+
+// Chart.js - Content Output
+const chartObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.dataset.rendered) {
+      entry.target.dataset.rendered = 'true';
+      const ctx = document.getElementById('outputChart');
+      if (ctx) {
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Emails', 'Proposals', 'Reports', 'Social Posts', 'Presentations', 'Follow Ups'],
+            datasets: [
+              {
+                label: 'Without OpenClaw',
+                data: [5, 1, 0.5, 2, 0.5, 3],
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                borderColor: 'rgba(255, 255, 255, 0.2)',
+                borderWidth: 1,
+                borderRadius: 4
+              },
+              {
+                label: 'With OpenClaw',
+                data: [25, 6, 3, 14, 3, 15],
+                backgroundColor: 'rgba(45, 143, 92, 0.6)',
+                borderColor: 'rgba(45, 143, 92, 0.8)',
+                borderWidth: 1,
+                borderRadius: 4
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                labels: { color: '#666', font: { family: "'IBM Plex Mono', monospace", size: 10 } }
+              }
+            },
+            scales: {
+              x: {
+                ticks: { color: '#666', font: { family: "'IBM Plex Mono', monospace", size: 10 } },
+                grid: { color: 'rgba(255,255,255,0.05)' }
+              },
+              y: {
+                ticks: { color: '#666', font: { family: "'IBM Plex Mono', monospace", size: 10 } },
+                grid: { color: 'rgba(255,255,255,0.05)' },
+                title: { display: true, text: 'Per Week', color: '#666', font: { family: "'IBM Plex Mono', monospace", size: 10 } }
+              }
+            }
+          }
+        });
+      }
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.tool-dashboard').forEach(el => chartObserver.observe(el));
+
+// Cursor blink
+const style = document.createElement('style');
+style.textContent = '@keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }';
+document.head.appendChild(style);
+</script>
+
+</body>
+</html>
