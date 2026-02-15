@@ -35,9 +35,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ============================================
-   HERO
-   ============================================ */
+/* HERO */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -180,9 +178,7 @@ body {
 
 @keyframes pulse { 0%,100%{opacity:.25} 50%{opacity:.6} }
 
-/* ============================================
-   SHARED SECTION STYLES
-   ============================================ */
+/* SHARED */
 .section {
   padding: 100px 24px;
   max-width: 1100px;
@@ -222,9 +218,7 @@ body {
 
 .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-/* ============================================
-   EXECUTIVE SUMMARY
-   ============================================ */
+/* EXECUTIVE SUMMARY */
 .exec-summary {
   background: white;
   border: 1px solid #e0ddd5;
@@ -290,9 +284,7 @@ body {
   margin-top: 4px;
 }
 
-/* ============================================
-   TIMELINE BAR (between exec summary and diagnosis)
-   ============================================ */
+/* TIMELINE */
 .timeline-bar {
   background: white;
   border: 1px solid #e0ddd5;
@@ -362,9 +354,7 @@ body {
   margin-top: 2px;
 }
 
-/* ============================================
-   DIAGNOSIS CARDS
-   ============================================ */
+/* DIAGNOSIS CARDS */
 .diagnosis-grid { display: grid; gap: 24px; }
 
 .diagnosis-card {
@@ -429,9 +419,7 @@ body {
 
 .diagnosis-impact strong { color: var(--red); }
 
-/* ============================================
-   PRESCRIPTION HEADER
-   ============================================ */
+/* PRESCRIPTION HEADER */
 .rx-header {
   text-align: center;
   padding: 100px 24px 60px;
@@ -446,18 +434,16 @@ body {
   font-weight: 700;
 }
 
-/* ============================================
-   RX 01 — EVENT COMMAND CENTER (Bloomberg)
-   ============================================ */
-.tool-terminal {
-  background: #0a0e17;
-  color: var(--orange);
+/* RX 01: EVENT COMMAND CENTER (Executive Dashboard) */
+.tool-ecc {
+  background: #0f1419;
   padding: 80px 24px;
+  color: #fff;
 }
 
-.tool-terminal .tool-inner { max-width: 1100px; margin: 0 auto; }
+.tool-ecc .tool-inner { max-width: 1100px; margin: 0 auto; }
 
-.tool-label-t {
+.tool-label-e {
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 4px;
@@ -466,89 +452,193 @@ body {
   margin-bottom: 8px;
 }
 
-.tool-title-t {
-  font-family: var(--mono);
-  font-size: clamp(22px,3vw,30px);
-  font-weight: 600;
-  color: #fff;
+.tool-title-e {
+  font-size: clamp(28px,4vw,38px);
+  font-weight: 700;
   margin-bottom: 8px;
 }
 
-.tool-desc-t {
-  font-family: var(--mono);
-  font-size: 13px;
+.tool-desc-e {
+  font-size: 15px;
   color: #4a5568;
-  margin-bottom: 40px;
-  max-width: 640px;
+  margin-bottom: 48px;
+  max-width: 600px;
   line-height: 1.7;
 }
 
-.terminal-window {
-  background: #0d1117;
-  border: 1px solid #1a2332;
-  border-radius: 6px;
+.ecc-events {
+  display: grid;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.ecc-event-card {
+  background: #1a1f26;
+  border-radius: 12px;
+  padding: 28px 32px;
+  border: 1px solid #2a3040;
+  transition: transform 0.2s ease;
+}
+
+.ecc-event-card:hover {
+  transform: translateY(-2px);
+}
+
+.ecc-event-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.ecc-event-name {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.ecc-event-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.ecc-status-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.ecc-status-badge.on-track { background: rgba(40,200,64,0.15); color: #28c840; }
+.ecc-status-badge.attention { background: rgba(255,153,0,0.15); color: var(--orange); }
+
+.ecc-progress-section {
+  margin-bottom: 20px;
+}
+
+.ecc-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.ecc-progress-bar {
+  height: 8px;
+  background: #2a3040;
+  border-radius: 4px;
   overflow: hidden;
 }
 
-.terminal-header {
-  background: #161b22;
-  padding: 12px 16px;
+.ecc-progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1.5s ease;
+  width: 0;
+}
+
+.ecc-progress-fill.green { background: linear-gradient(90deg, #1a5f3a, #28c840); }
+.ecc-progress-fill.orange { background: linear-gradient(90deg, #b8860b, #ff9900); }
+
+.ecc-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+.ecc-detail {
+  background: #222833;
+  border-radius: 8px;
+  padding: 14px 16px;
+  text-align: center;
+}
+
+.ecc-detail-value {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.ecc-detail-value.green { color: #28c840; }
+.ecc-detail-value.orange { color: var(--orange); }
+.ecc-detail-value.red { color: #ff5f57; }
+.ecc-detail-value.cyan { color: var(--cyan); }
+
+.ecc-detail-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #6b7280;
+}
+
+.ecc-alert {
   display: flex;
   align-items: center;
-  gap: 8px;
-  border-bottom: 1px solid #1a2332;
-}
-
-.td { width: 10px; height: 10px; border-radius: 50%; }
-.td.r { background: #ff5f57; }
-.td.y { background: #febc2e; }
-.td.g { background: #28c840; }
-
-.terminal-bar {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: #484f58;
-  margin-left: 12px;
-}
-
-.terminal-body {
-  padding: 24px;
-  font-family: var(--mono);
-  font-size: 13px;
-  line-height: 1.9;
-  min-height: 340px;
-}
-
-.tl-line { margin-bottom: 2px; white-space: pre-wrap; }
-.tl-prompt { color: #28c840; }
-.tl-cmd { color: #fff; }
-.tl-out { color: #8b949e; }
-.tl-orange { color: var(--orange); }
-.tl-green { color: #28c840; }
-.tl-red { color: #ff5f57; }
-.tl-blue { color: #58a6ff; }
-.tl-cyan { color: var(--cyan); }
-.tl-gold { color: var(--gold); }
-.tl-purple { color: var(--purple); }
-.tl-dim { color: #30363d; }
-
-.terminal-input-row {
-  display: flex;
-  align-items: center;
+  gap: 10px;
   margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid #1a2332;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13px;
 }
 
-.terminal-input-row .tl-prompt { margin-right: 8px; }
+.ecc-alert.warning {
+  background: rgba(255,153,0,0.08);
+  border: 1px solid rgba(255,153,0,0.2);
+  color: var(--orange);
+}
 
-#typing-target { color: #fff; }
-#cursor { animation: blink 1s step-end infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+.ecc-alert.danger {
+  background: rgba(255,95,87,0.08);
+  border: 1px solid rgba(255,95,87,0.2);
+  color: #ff5f57;
+}
 
-/* ============================================
-   RX 02 — CLIENT BRIEF AUTOPILOT (Apple)
-   ============================================ */
+.ecc-alert-icon {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ecc-alert-icon.orange { background: var(--orange); }
+.ecc-alert-icon.red { background: #ff5f57; }
+
+.ecc-summary-bar {
+  background: #1a1f26;
+  border-radius: 12px;
+  padding: 24px 32px;
+  border: 1px solid #2a3040;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  text-align: center;
+}
+
+.ecc-summary-stat .value {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.ecc-summary-stat .label {
+  font-family: var(--mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+/* RX 02: CLIENT BRIEF AUTOPILOT (Apple) */
 .tool-apple {
   background: #fafafa;
   padding: 100px 24px;
@@ -668,9 +758,7 @@ body {
 .item-tag.review { background: rgba(184,134,11,0.1); color: var(--gold); }
 .item-tag.approved { background: rgba(26,95,58,0.1); color: var(--accent); }
 
-/* ============================================
-   RX 03 — CONTENT PIPELINE (Glassmorphism)
-   ============================================ */
+/* RX 03: REVENUE FORECASTER (Glassmorphism) */
 .tool-glass {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   padding: 100px 24px;
@@ -790,9 +878,30 @@ body {
   margin: 12px 0 4px;
 }
 
-/* ============================================
-   RX 04 — WEB3 INTELLIGENCE (Dark Dashboard)
-   ============================================ */
+.revenue-chart-wrap {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 28px;
+  margin-top: 20px;
+  height: 280px;
+  position: relative;
+}
+
+.revenue-chart-wrap h4 {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.revenue-chart-inner {
+  height: 220px;
+  position: relative;
+}
+
+/* RX 04: WEB3 INTELLIGENCE (Dark Dashboard) */
 .tool-dashboard {
   background: #111;
   padding: 100px 24px;
@@ -923,9 +1032,7 @@ body {
   margin-top: 2px;
 }
 
-/* ============================================
-   RX 05 — TEAM SYNC (Neo Brutalist)
-   ============================================ */
+/* RX 05: TEAM SYNC (Neo Brutalist) */
 .tool-brutal {
   background: #fffbe6;
   padding: 100px 24px;
@@ -1059,9 +1166,7 @@ body {
 .overlap-status.pending { background: rgba(184,134,11,0.1); color: var(--gold); }
 .overlap-status.blocked { background: rgba(192,57,43,0.1); color: var(--red); }
 
-/* ============================================
-   RX 06 — PITCH GENERATOR (Conversational)
-   ============================================ */
+/* RX 06: PITCH GENERATOR (Conversational) */
 .tool-pitch {
   background: var(--paper);
   padding: 100px 24px;
@@ -1161,9 +1266,7 @@ body {
   color: #555;
 }
 
-/* ============================================
-   CTA SECTION
-   ============================================ */
+/* CTA */
 .cta-section {
   background: linear-gradient(135deg, #0a0a0a 0%, #0f1923 100%);
   padding: 120px 24px;
@@ -1239,9 +1342,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* ============================================
-   FOOTER
-   ============================================ */
+/* FOOTER */
 .footer {
   background: #0a0a0a;
   padding: 40px 24px;
@@ -1256,9 +1357,7 @@ body {
   text-transform: uppercase;
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
+/* RESPONSIVE */
 @media (max-width: 768px) {
   .section { padding: 60px 20px; }
   .exec-summary { padding: 28px; }
@@ -1266,27 +1365,26 @@ body {
   .dashboard-top { grid-template-columns: repeat(2, 1fr); }
   .dashboard-main { grid-template-columns: 1fr; }
   .hero-stamp { display: none; }
-  .terminal-body { font-size: 11px; padding: 16px; }
   .apple-pipeline { flex-direction: column; }
   .apple-col { min-width: 100%; }
   .timeline-bar { padding: 24px; overflow-x: auto; }
   .timeline { min-width: 500px; }
   .brutal-departments { grid-template-columns: 1fr 1fr; }
   .pitch-demo { padding: 24px; }
-  .tool-label-a, .tool-label-t, .tool-label-g, .tool-label-d,
-  .tool-label-b, .tool-label-p { font-size: 10px; }
+  .ecc-details { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 480px) {
   .dashboard-top { grid-template-columns: 1fr; }
   .brutal-departments { grid-template-columns: 1fr; }
   .exec-stats { grid-template-columns: 1fr 1fr; }
+  .ecc-details { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
-<!-- ===== HERO ===== -->
+<!-- HERO -->
 <section class="hero">
   <div class="hero-stamp">
     <span>Report</span>
@@ -1296,14 +1394,14 @@ body {
   <div class="hero-content">
     <div class="hero-label">OpenClaw Diagnostic Report</div>
     <div class="hero-divider"></div>
-    <div class="hero-patient">Prepared for Shayne Mann</div>
+    <div class="hero-patient">Shayne Mann</div>
     <div class="hero-company">Managing Director, Mann Made</div>
-    <h1 class="hero-title">Your Agency<br>Deserves an<br>Operating System</h1>
-    <p class="hero-subtitle">A diagnostic assessment and deployment plan for Mann Made</p>
+    <h1 class="hero-title">Your Agency<br>Needs an<br>Operating System</h1>
+    <p class="hero-subtitle">Six problems. Six tools. One platform.</p>
     <div class="hero-meta">
-      <span>Johannesburg, South Africa</span>
+      <span>Johannesburg</span>
       <span>|</span>
-      <span>Brand Experience Agency</span>
+      <span>Brand Experience</span>
       <span>|</span>
       <span>Confidential</span>
     </div>
@@ -1311,20 +1409,17 @@ body {
   <a href="#exec" class="hero-scroll">Scroll to begin</a>
 </section>
 
-<!-- ===== EXECUTIVE SUMMARY ===== -->
+<!-- EXECUTIVE SUMMARY -->
 <section class="section" id="exec">
   <div class="fade-in">
     <div class="section-label">Executive Summary</div>
     <div class="section-title">The Assessment</div>
-    <div class="section-desc">
-      You built Mann Made from wedding videos in the late 1990s into a 60 person brand experience powerhouse. Events, video, animation, VR, blockchain, activations. That range is your superpower and your biggest operational challenge.
-    </div>
   </div>
 
   <div class="exec-summary fade-in">
     <h3>Key Finding</h3>
     <p>
-      Shayne, Mann Made operates across <span class="hl">six distinct creative disciplines</span> with a single management layer. Your team coordinates live events, virtual productions, animation pipelines, social media campaigns, Web3 community initiatives, and interactive activations simultaneously. Each discipline has its own tempo, tooling, and client expectations. The connective tissue between them is <span class="hl">you and your leadership team</span>, and that does not scale. OpenClaw is designed to become that connective tissue: always on, always aware, always routing information to the right person at the right time.
+      Mann Made operates across <span class="hl">six creative disciplines</span> with one management layer. Events, video, animation, VR, Web3, activations. The connective tissue between them is <span class="hl">you and your leadership team</span>, and that does not scale. OpenClaw becomes that connective tissue.
     </p>
     <div class="exec-stats">
       <div class="exec-stat">
@@ -1378,14 +1473,11 @@ body {
   </div>
 </section>
 
-<!-- ===== DIAGNOSIS ===== -->
+<!-- DIAGNOSIS -->
 <section class="section" style="padding-top: 0;">
   <div class="fade-in">
     <div class="section-label">Part One</div>
     <div class="section-title">The Diagnosis</div>
-    <div class="section-desc">
-      Six friction points identified through analysis of Mann Made's operational model, service portfolio, and the unique challenges of running a multi discipline creative agency in South Africa.
-    </div>
   </div>
 
   <div class="diagnosis-grid">
@@ -1393,7 +1485,7 @@ body {
       <div class="diagnosis-number">01</div>
       <div class="diagnosis-severity severity-high">Critical</div>
       <h3>Event Production Chaos</h3>
-      <p>A single live event involves dozens of vendors, hundreds of line items, multiple client stakeholders, and a timeline that changes hourly in the final week. Multiply that by concurrent events across live, virtual, and hybrid formats. Your team is managing complexity that would challenge a military logistics operation, often with spreadsheets and WhatsApp groups.</p>
+      <p>Dozens of vendors, hundreds of line items, timelines that change hourly. <strong>Spreadsheets and WhatsApp</strong> cannot hold this together across concurrent live, virtual, and hybrid events.</p>
       <div class="diagnosis-impact">Risk: <strong>One missed detail can derail a six figure production</strong></div>
     </div>
 
@@ -1401,23 +1493,23 @@ body {
       <div class="diagnosis-number">02</div>
       <div class="diagnosis-severity severity-high">Critical</div>
       <h3>Client Communication Overload</h3>
-      <p>Brand experience is a high touch business. Every client expects fast turnaround on creative briefs, revision rounds, event logistics updates, and approval chains. With multiple active clients across different service lines, the volume of back and forth creates bottlenecks. Briefs get lost in email threads. Revision feedback arrives in five different formats. Approvals stall because the right person never saw the message.</p>
-      <div class="diagnosis-impact">Cost: <strong>Average brief to approval cycle 40% longer than necessary</strong></div>
+      <p>Briefs lost in email threads. Feedback in five formats. Approvals stalled because the right person never saw the message. <strong>The back and forth is the bottleneck.</strong></p>
+      <div class="diagnosis-impact">Cost: <strong>Brief to approval cycle 40% longer than necessary</strong></div>
     </div>
 
     <div class="diagnosis-card fade-in">
       <div class="diagnosis-number">03</div>
       <div class="diagnosis-severity severity-high">High Impact</div>
-      <h3>Content Pipeline Bottleneck</h3>
-      <p>Video production, animation, social media content, and event collateral all flow through overlapping teams. When the events division needs a sizzle reel, the animation team needs a character approved, and social media needs 30 pieces of content for the month, who goes first? Without a unified pipeline view, resource allocation becomes guesswork and deadlines become suggestions.</p>
-      <div class="diagnosis-impact">Estimated waste: <strong>15 to 20 hours weekly in scheduling conflicts</strong></div>
+      <h3>Revenue Visibility Gap</h3>
+      <p>Six service lines billing independently with <strong>no unified forecast</strong>. Cash flow surprises, pipeline blind spots, and pricing decisions made on gut feel instead of data.</p>
+      <div class="diagnosis-impact">Estimated waste: <strong>15 to 20 hours monthly in financial reconciliation</strong></div>
     </div>
 
     <div class="diagnosis-card fade-in">
       <div class="diagnosis-number">04</div>
       <div class="diagnosis-severity severity-emerging">Emerging</div>
-      <h3>Web3 and Metaverse Market Uncertainty</h3>
-      <p>Africarare positioned Mann Made at the frontier of Africa's metaverse economy. But the Web3 landscape shifts daily. Token valuations, NFT sentiment, regulatory signals, competitor moves, community health. Staying on top of this requires constant monitoring across dozens of channels, Discord servers, and crypto feeds. The cost of missing a critical shift is not just financial but reputational.</p>
+      <h3>Web3 Market Uncertainty</h3>
+      <p>The Web3 landscape shifts daily. Token valuations, regulatory signals, competitor moves, community health. <strong>Missing a critical shift costs money and reputation.</strong></p>
       <div class="diagnosis-impact">Exposure: <strong>Market conditions can reverse within hours</strong></div>
     </div>
 
@@ -1425,86 +1517,194 @@ body {
       <div class="diagnosis-number">05</div>
       <div class="diagnosis-severity severity-medium">Medium Impact</div>
       <h3>Multi Department Coordination</h3>
-      <p>Events, production, animation, social media, activations, and gaming. Six departments, each with its own workflow, tools, and deadlines. When a corporate client books a hybrid event with custom animation, social media coverage, and an interactive activation, four departments need to synchronize without a shared operational layer. Cross department visibility is the missing infrastructure at Mann Made.</p>
+      <p>When a client books a hybrid event with custom animation, social coverage, and an activation, <strong>four departments must sync with no shared operational layer.</strong></p>
       <div class="diagnosis-impact">Gap: <strong>No single view of resource allocation across departments</strong></div>
     </div>
 
     <div class="diagnosis-card fade-in">
       <div class="diagnosis-number">06</div>
       <div class="diagnosis-severity severity-medium">Medium Impact</div>
-      <h3>Business Development in a Competitive Market</h3>
-      <p>South Africa's corporate events and brand experience market is intensely competitive. Winning pitches requires deep client research, tailored proposals, competitive analysis, and fast turnaround. Your team's creative quality is world class but the business development process consumes hours that could be spent on the creative work that actually wins the deal.</p>
+      <h3>Business Development Drag</h3>
+      <p>Winning pitches takes deep research, tailored proposals, and fast turnaround. <strong>Hours spent on process instead of the creative work that wins deals.</strong></p>
       <div class="diagnosis-impact">Opportunity: <strong>2x pitch output with same team capacity</strong></div>
     </div>
   </div>
 </section>
 
-<!-- ===== PRESCRIPTION HEADER ===== -->
+<!-- PRESCRIPTION HEADER -->
 <div class="rx-header">
   <div class="fade-in">
     <div class="rx-symbol">Rx</div>
     <div class="section-label" style="text-align:center;">Part Two</div>
     <div class="section-title" style="text-align:center;">The Prescription</div>
     <div class="section-desc" style="text-align:center; margin:0 auto;">
-      Six deployable capabilities, each designed for Mann Made's specific operational reality. These are not concepts. They are tools you can put to work immediately.
+      Six tools built for Mann Made. Not concepts. Deployable now.
     </div>
   </div>
 </div>
 
-<!-- ===== RX 01: EVENT COMMAND CENTER (Bloomberg Terminal) ===== -->
-<div class="tool-terminal">
+<!-- RX 01: EVENT COMMAND CENTER (Executive Dashboard) -->
+<div class="tool-ecc">
   <div class="tool-inner fade-in">
-    <div class="tool-label-t">Prescription 01 / Event Production Chaos</div>
-    <div class="tool-title-t">Event Command Center</div>
-    <div class="tool-desc-t">Real time event intelligence. OpenClaw monitors every vendor, every timeline, every deliverable across all active productions. Ask it anything. It knows.</div>
+    <div class="tool-label-e">Prescription 01 / Event Production Chaos</div>
+    <div class="tool-title-e">Event Command Centre</div>
+    <div class="tool-desc-e">Every event, every vendor, every deadline. One view. Always current.</div>
 
-    <div class="terminal-window">
-      <div class="terminal-header">
-        <div class="td r"></div><div class="td y"></div><div class="td g"></div>
-        <div class="terminal-bar">openclaw://mann-made/event-command</div>
+    <div class="ecc-events" id="ecc-events">
+      <div class="ecc-event-card">
+        <div class="ecc-event-top">
+          <div>
+            <div class="ecc-event-name">Nedbank Brand Summit</div>
+            <div class="ecc-event-meta">Hybrid | Sandton Convention Centre | 22 Feb 2026</div>
+          </div>
+          <div class="ecc-status-badge on-track">On Track</div>
+        </div>
+        <div class="ecc-progress-section">
+          <div class="ecc-progress-label">
+            <span>Task Completion</span>
+            <span>94%</span>
+          </div>
+          <div class="ecc-progress-bar">
+            <div class="ecc-progress-fill green" data-width="94"></div>
+          </div>
+        </div>
+        <div class="ecc-details">
+          <div class="ecc-detail">
+            <div class="ecc-detail-value green">47</div>
+            <div class="ecc-detail-label">Tasks Done</div>
+          </div>
+          <div class="ecc-detail">
+            <div class="ecc-detail-value orange">3</div>
+            <div class="ecc-detail-label">Pending Vendor</div>
+          </div>
+          <div class="ecc-detail">
+            <div class="ecc-detail-value cyan">7</div>
+            <div class="ecc-detail-label">Days to Event</div>
+          </div>
+          <div class="ecc-detail">
+            <div class="ecc-detail-value green">R2.1M</div>
+            <div class="ecc-detail-label">Budget Status</div>
+          </div>
+        </div>
+        <div class="ecc-alert warning">
+          <div class="ecc-alert-icon orange"></div>
+          AV subcontractor quote overdue by 2 days
+        </div>
       </div>
-      <div class="terminal-body">
-        <div class="tl-line"><span class="tl-prompt">$</span> <span class="tl-cmd">openclaw events.status --active</span></div>
-        <div class="tl-line">&nbsp;</div>
-        <div class="tl-line"><span class="tl-orange">ACTIVE EVENTS (3)</span></div>
-        <div class="tl-line"><span class="tl-dim">---</span></div>
-        <div class="tl-line"><span class="tl-cyan">Nedbank Brand Summit</span> <span class="tl-out">| Hybrid | Sandton | 22 Feb</span></div>
-        <div class="tl-line"><span class="tl-out">  Status: </span><span class="tl-green">ON TRACK</span><span class="tl-out"> | 94% tasks complete | 3 vendor confirmations pending</span></div>
-        <div class="tl-line"><span class="tl-out">  Risk: </span><span class="tl-gold">AV subcontractor quote overdue by 2 days</span></div>
-        <div class="tl-line">&nbsp;</div>
-        <div class="tl-line"><span class="tl-cyan">Vodacom Product Launch</span> <span class="tl-out">| Virtual | Studio B | 28 Feb</span></div>
-        <div class="tl-line"><span class="tl-out">  Status: </span><span class="tl-gold">ATTENTION</span><span class="tl-out"> | 71% tasks complete | Animation package in review</span></div>
-        <div class="tl-line"><span class="tl-out">  Risk: </span><span class="tl-red">Client has not approved final run sheet (due yesterday)</span></div>
-        <div class="tl-line">&nbsp;</div>
-        <div class="tl-line"><span class="tl-cyan">SAB Activation Series</span> <span class="tl-out">| Live | Multi city | Mar 1 to 15</span></div>
-        <div class="tl-line"><span class="tl-out">  Status: </span><span class="tl-green">ON TRACK</span><span class="tl-out"> | 58% tasks complete | On schedule</span></div>
-        <div class="tl-line"><span class="tl-out">  Note: </span><span class="tl-out">Durban venue contract signed this morning</span></div>
-        <div class="tl-line">&nbsp;</div>
-        <div class="tl-line"><span class="tl-dim">---</span></div>
-        <div class="tl-line"><span class="tl-out">Total open tasks: </span><span class="tl-orange">47</span><span class="tl-out"> | Overdue: </span><span class="tl-red">3</span><span class="tl-out"> | Pending vendor: </span><span class="tl-gold">8</span></div>
-        <div class="tl-line">&nbsp;</div>
-        <div class="terminal-input-row">
-          <span class="tl-prompt">$</span>
-          <span id="typing-target"></span><span id="cursor">_</span>
+
+      <div class="ecc-event-card">
+        <div class="ecc-event-top">
+          <div>
+            <div class="ecc-event-name">Vodacom Product Launch</div>
+            <div class="ecc-event-meta">Virtual | Studio B | 28 Feb 2026</div>
+          </div>
+          <div class="ecc-status-badge attention">Attention</div>
+        </div>
+        <div class="ecc-progress-section">
+          <div class="ecc-progress-label">
+            <span>Task Completion</span>
+            <span>71%</span>
+          </div>
+          <div class="ecc-progress-bar">
+            <div class="ecc-progress-fill orange" data-width="71"></div>
+          </div>
+        </div>
+        <div class="ecc-details">
+          <div class="ecc-detail">
+            <div class="ecc-detail-value green">34</div>
+            <div class="ecc-detail-label">Tasks Done</div>
+          </div>
+          <div class="ecc-detail">
+            <div class="ecc-detail-value orange">5</div>
+            <div class="ecc-detail-label">Pending Vendor</div>
+          </div>
+          <div class="ecc-detail">
+            <div class="ecc-detail-value cyan">13</div>
+            <div class="ecc-detail-label">Days to Event</div>
+          </div>
+          <div class="ecc-detail">
+            <div class="ecc-detail-value orange">R1.4M</div>
+            <div class="ecc-detail-label">Budget Status</div>
+          </div>
+        </div>
+        <div class="ecc-alert danger">
+          <div class="ecc-alert-icon red"></div>
+          Client has not approved final run sheet (due yesterday)
+        </div>
+      </div>
+
+      <div class="ecc-event-card">
+        <div class="ecc-event-top">
+          <div>
+            <div class="ecc-event-name">SAB Activation Series</div>
+            <div class="ecc-event-meta">Live | Multi city | 1 to 15 Mar 2026</div>
+          </div>
+          <div class="ecc-status-badge on-track">On Track</div>
+        </div>
+        <div class="ecc-progress-section">
+          <div class="ecc-progress-label">
+            <span>Task Completion</span>
+            <span>58%</span>
+          </div>
+          <div class="ecc-progress-bar">
+            <div class="ecc-progress-fill green" data-width="58"></div>
+          </div>
+        </div>
+        <div class="ecc-details">
+          <div class="ecc-detail">
+            <div class="ecc-detail-value green">29</div>
+            <div class="ecc-detail-label">Tasks Done</div>
+          </div>
+          <div class="ecc-detail">
+            <div class="ecc-detail-value green">0</div>
+            <div class="ecc-detail-label">Overdue</div>
+          </div>
+          <div class="ecc-detail">
+            <div class="ecc-detail-value cyan">14</div>
+            <div class="ecc-detail-label">Days to Start</div>
+          </div>
+          <div class="ecc-detail">
+            <div class="ecc-detail-value green">R3.2M</div>
+            <div class="ecc-detail-label">Budget Status</div>
+          </div>
         </div>
       </div>
     </div>
+
+    <div class="ecc-summary-bar">
+      <div class="ecc-summary-stat">
+        <div class="value" style="color:var(--orange);">47</div>
+        <div class="label">Open Tasks</div>
+      </div>
+      <div class="ecc-summary-stat">
+        <div class="value" style="color:#ff5f57;">3</div>
+        <div class="label">Overdue</div>
+      </div>
+      <div class="ecc-summary-stat">
+        <div class="value" style="color:var(--gold);">8</div>
+        <div class="label">Pending Vendor</div>
+      </div>
+      <div class="ecc-summary-stat">
+        <div class="value" style="color:#28c840;">3</div>
+        <div class="label">Active Events</div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- ===== RX 02: CLIENT BRIEF AUTOPILOT (Apple Minimal) ===== -->
+<!-- RX 02: CLIENT BRIEF AUTOPILOT (Apple) -->
 <div class="tool-apple">
   <div class="tool-inner fade-in">
     <div class="tool-label-a">Prescription 02 / Client Communication Overload</div>
     <div class="tool-title-a">Client Brief<br>Autopilot</div>
-    <div class="tool-desc-a">From intake to approval, every brief is tracked, every revision logged, every stakeholder notified. Nothing falls through.</div>
+    <div class="tool-desc-a">Every brief tracked from intake to approval. Nothing falls through.</div>
 
     <div class="apple-pipeline">
       <div class="apple-col">
         <div class="apple-col-header">Intake <div class="col-count">3</div></div>
         <div class="apple-item">
           <h5>Discovery Insurance Awards</h5>
-          <p>Event brief received via email. Auto parsed, awaiting team assignment.</p>
+          <p>Event brief auto parsed from email, awaiting team assignment.</p>
           <div class="item-meta">
             <span class="item-tag">Event</span>
             <span class="item-tag urgent">Due 48h</span>
@@ -1512,7 +1712,7 @@ body {
         </div>
         <div class="apple-item">
           <h5>Woolworths Social Campaign</h5>
-          <p>30 day content calendar. Brief structured by OpenClaw from client call transcript.</p>
+          <p>30 day content calendar. Brief built from client call transcript.</p>
           <div class="item-meta">
             <span class="item-tag">Social</span>
             <span class="item-tag">Content</span>
@@ -1520,7 +1720,7 @@ body {
         </div>
         <div class="apple-item">
           <h5>FNB VR Experience</h5>
-          <p>Exploratory brief. OpenClaw flagged three similar past projects for reference.</p>
+          <p>Exploratory brief. Three similar past projects flagged for reference.</p>
           <div class="item-meta">
             <span class="item-tag">VR</span>
             <span class="item-tag">New Client</span>
@@ -1532,7 +1732,7 @@ body {
         <div class="apple-col-header">In Review <div class="col-count">2</div></div>
         <div class="apple-item">
           <h5>Standard Bank Gala</h5>
-          <p>Creative concept V2 sent to client. Revision notes from V1 all addressed.</p>
+          <p>Creative concept V2 sent. All V1 revision notes addressed.</p>
           <div class="item-meta">
             <span class="item-tag review">Awaiting Client</span>
             <span class="item-tag">Day 3</span>
@@ -1552,7 +1752,7 @@ body {
         <div class="apple-col-header">Approved <div class="col-count">2</div></div>
         <div class="apple-item">
           <h5>Sasol Year End Event</h5>
-          <p>Full brief approved. Production schedule auto generated. Team notified.</p>
+          <p>Full brief approved. Production schedule auto generated.</p>
           <div class="item-meta">
             <span class="item-tag approved">Approved</span>
             <span class="item-tag">In Production</span>
@@ -1560,7 +1760,7 @@ body {
         </div>
         <div class="apple-item">
           <h5>MTN Activation Joburg</h5>
-          <p>All creative assets signed off. Vendor POs issued by OpenClaw.</p>
+          <p>All creative assets signed off. Vendor POs issued.</p>
           <div class="item-meta">
             <span class="item-tag approved">Complete</span>
           </div>
@@ -1570,56 +1770,63 @@ body {
   </div>
 </div>
 
-<!-- ===== RX 03: CONTENT PIPELINE (Glassmorphism) ===== -->
+<!-- RX 03: REVENUE FORECASTER (Glassmorphism) -->
 <div class="tool-glass">
   <div class="tool-inner fade-in">
-    <div class="tool-label-g">Prescription 03 / Content Pipeline Bottleneck</div>
-    <div class="tool-title-g">Content Production Tracker</div>
-    <div class="tool-desc-g">Unified pipeline across video, animation, social, and event collateral. Every asset tracked from commission to delivery.</div>
+    <div class="tool-label-g">Prescription 03 / Revenue Visibility Gap</div>
+    <div class="tool-title-g">Revenue Forecaster</div>
+    <div class="tool-desc-g">Unified financial view across all six service lines. Forecast, track, and spot gaps before they become problems.</div>
 
     <div class="glass-grid">
       <div class="glass-card">
-        <h4>Video Production</h4>
-        <p>Corporate videos, event recordings, testimonials, and sizzle reels. Full lifecycle tracking from shoot scheduling through post production to final delivery.</p>
-        <div class="glass-number">14</div>
-        <div class="glass-stat">Active projects this month</div>
-        <div class="glass-bar"><div class="glass-bar-fill cyan" data-width="78"></div></div>
-        <div class="glass-stat">Pipeline capacity: 78%</div>
+        <h4>Q1 2026 Pipeline</h4>
+        <p>Confirmed and probable revenue across all divisions.</p>
+        <div class="glass-number">R18.4M</div>
+        <div class="glass-stat">Confirmed: R12.1M | Probable: R6.3M</div>
+        <div class="glass-bar"><div class="glass-bar-fill cyan" data-width="66"></div></div>
+        <div class="glass-stat">66% confirmed</div>
       </div>
       <div class="glass-card">
-        <h4>Animation Pipeline</h4>
-        <p>Character design, motion graphics, explainer videos, and interactive elements. OpenClaw tracks each stage: concept, storyboard, design, animate, render, deliver.</p>
-        <div class="glass-number">8</div>
-        <div class="glass-stat">Projects in production</div>
-        <div class="glass-bar"><div class="glass-bar-fill purple" data-width="65"></div></div>
-        <div class="glass-stat">Pipeline capacity: 65%</div>
+        <h4>Events Division</h4>
+        <p>Largest revenue driver. Three active events billing this quarter.</p>
+        <div class="glass-number">R8.2M</div>
+        <div class="glass-stat">45% of total pipeline</div>
+        <div class="glass-bar"><div class="glass-bar-fill green" data-width="82"></div></div>
+        <div class="glass-stat">82% collection rate</div>
       </div>
       <div class="glass-card">
-        <h4>Social Media Content</h4>
-        <p>Monthly calendars, daily posts, stories, reels, and campaign assets across all client accounts. Scheduled, tracked, and performance measured automatically.</p>
-        <div class="glass-number">127</div>
-        <div class="glass-stat">Pieces scheduled this month</div>
-        <div class="glass-bar"><div class="glass-bar-fill green" data-width="91"></div></div>
-        <div class="glass-stat">Delivery rate: 91% on time</div>
+        <h4>Production + Animation</h4>
+        <p>Combined creative services forecast for Q1.</p>
+        <div class="glass-number">R5.7M</div>
+        <div class="glass-stat">14 active projects billing</div>
+        <div class="glass-bar"><div class="glass-bar-fill purple" data-width="71"></div></div>
+        <div class="glass-stat">71% on schedule</div>
       </div>
       <div class="glass-card">
-        <h4>Event Collateral</h4>
-        <p>Stage design mockups, branded environments, print materials, digital signage, and merchandise. OpenClaw ensures every asset aligns with the master event brief.</p>
-        <div class="glass-number">32</div>
-        <div class="glass-stat">Assets in production</div>
-        <div class="glass-bar"><div class="glass-bar-fill gold" data-width="54"></div></div>
-        <div class="glass-stat">Pipeline capacity: 54%</div>
+        <h4>Cash Flow Alert</h4>
+        <p>Projected shortfall in March if two pending invoices remain unpaid.</p>
+        <div class="glass-number">R1.8M</div>
+        <div class="glass-stat">At risk: 2 invoices over 60 days</div>
+        <div class="glass-bar"><div class="glass-bar-fill gold" data-width="38"></div></div>
+        <div class="glass-stat">38% collected of March target</div>
+      </div>
+    </div>
+
+    <div class="revenue-chart-wrap">
+      <h4>12 Month Revenue Trend</h4>
+      <div class="revenue-chart-inner">
+        <canvas id="revenueChart"></canvas>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ===== RX 04: WEB3 INTELLIGENCE (Dark Dashboard) ===== -->
+<!-- RX 04: WEB3 INTELLIGENCE (Dark Dashboard) -->
 <div class="tool-dashboard">
   <div class="tool-inner fade-in">
-    <div class="tool-label-d">Prescription 04 / Web3 and Metaverse Market Uncertainty</div>
+    <div class="tool-label-d">Prescription 04 / Web3 Market Uncertainty</div>
     <div class="tool-title-d">Web3 Intelligence Monitor</div>
-    <div class="tool-desc-d">Real time market intelligence for Africarare and Mann Made's blockchain ventures. Community health, token metrics, regulatory signals, competitor moves.</div>
+    <div class="tool-desc-d">Market intelligence for Africarare. Community health, token metrics, regulatory signals, competitor moves.</div>
 
     <div class="dashboard-top">
       <div class="dash-metric">
@@ -1654,28 +1861,28 @@ body {
         <div class="feed-item">
           <div class="feed-dot cyan"></div>
           <div>
-            <div class="feed-text"><strong>Decentraland</strong> announced enterprise partnership program. Potential competitive model for Africarare.</div>
+            <div class="feed-text"><strong>Decentraland</strong> enterprise partnership program announced. Potential competitive model.</div>
             <div class="feed-time">2 hours ago</div>
           </div>
         </div>
         <div class="feed-item">
           <div class="feed-dot purple"></div>
           <div>
-            <div class="feed-text"><strong>FSCA</strong> published draft framework for virtual asset service providers in South Africa.</div>
+            <div class="feed-text"><strong>FSCA</strong> draft framework for virtual asset service providers published.</div>
             <div class="feed-time">6 hours ago</div>
           </div>
         </div>
         <div class="feed-item">
           <div class="feed-dot gold"></div>
           <div>
-            <div class="feed-text"><strong>The Sandbox</strong> Q4 earnings missed estimates. Land sales down 34% quarter over quarter.</div>
+            <div class="feed-text"><strong>The Sandbox</strong> Q4 missed estimates. Land sales down 34% QoQ.</div>
             <div class="feed-time">1 day ago</div>
           </div>
         </div>
         <div class="feed-item">
           <div class="feed-dot green"></div>
           <div>
-            <div class="feed-text"><strong>Africarare Discord</strong> community sentiment positive. 94% satisfaction in latest poll.</div>
+            <div class="feed-text"><strong>Africarare Discord</strong> sentiment positive. 94% satisfaction in latest poll.</div>
             <div class="feed-time">1 day ago</div>
           </div>
         </div>
@@ -1684,32 +1891,32 @@ body {
   </div>
 </div>
 
-<!-- ===== RX 05: TEAM SYNC (Neo Brutalist) ===== -->
+<!-- RX 05: TEAM SYNC (Neo Brutalist) -->
 <div class="tool-brutal">
   <div class="tool-inner fade-in">
     <div class="tool-label-b">Prescription 05 / Multi Department Coordination</div>
     <div class="tool-title-b">Team Sync Dashboard</div>
-    <div class="tool-desc-b">One view across every department at Mann Made. Who is working on what, where the bottlenecks are, and which projects need cross team coordination right now.</div>
+    <div class="tool-desc-b">One view across every department. Who is on what, where the bottlenecks are, which projects need cross team coordination now.</div>
 
     <div class="brutal-departments" id="dept-grid">
       <div class="brutal-dept">
         <div class="brutal-dept-name">Department</div>
         <h4>Events</h4>
-        <div class="dept-stat">12 active projects | 18 staff</div>
+        <div class="dept-stat">12 projects | 18 staff</div>
         <div class="dept-bar"><div class="dept-bar-fill red" data-width="88" style="width:0"></div></div>
-        <div class="dept-stat" style="margin-top:6px;">Capacity: 88% (near limit)</div>
+        <div class="dept-stat" style="margin-top:6px;">Capacity: 88%</div>
       </div>
       <div class="brutal-dept">
         <div class="brutal-dept-name">Department</div>
         <h4>Production</h4>
-        <div class="dept-stat">14 active projects | 15 staff</div>
+        <div class="dept-stat">14 projects | 15 staff</div>
         <div class="dept-bar"><div class="dept-bar-fill gold" data-width="72" style="width:0"></div></div>
         <div class="dept-stat" style="margin-top:6px;">Capacity: 72%</div>
       </div>
       <div class="brutal-dept">
         <div class="brutal-dept-name">Department</div>
         <h4>Animation</h4>
-        <div class="dept-stat">8 active projects | 10 staff</div>
+        <div class="dept-stat">8 projects | 10 staff</div>
         <div class="dept-bar"><div class="dept-bar-fill green" data-width="65" style="width:0"></div></div>
         <div class="dept-stat" style="margin-top:6px;">Capacity: 65%</div>
       </div>
@@ -1723,14 +1930,14 @@ body {
       <div class="brutal-dept">
         <div class="brutal-dept-name">Department</div>
         <h4>Activations</h4>
-        <div class="dept-stat">4 active projects | 6 staff</div>
+        <div class="dept-stat">4 projects | 6 staff</div>
         <div class="dept-bar"><div class="dept-bar-fill green" data-width="55" style="width:0"></div></div>
         <div class="dept-stat" style="margin-top:6px;">Capacity: 55%</div>
       </div>
       <div class="brutal-dept">
         <div class="brutal-dept-name">Department</div>
         <h4>Gaming / Web3</h4>
-        <div class="dept-stat">3 active projects | 5 staff</div>
+        <div class="dept-stat">3 projects | 5 staff</div>
         <div class="dept-bar"><div class="dept-bar-fill green" data-width="48" style="width:0"></div></div>
         <div class="dept-stat" style="margin-top:6px;">Capacity: 48%</div>
       </div>
@@ -1750,12 +1957,12 @@ body {
       </div>
       <div class="overlap-row">
         <span class="overlap-teams">Activations + Events</span>
-        <span>Nedbank interactive booth integration</span>
+        <span>Nedbank interactive booth</span>
         <span class="overlap-status synced">Synced</span>
       </div>
       <div class="overlap-row">
         <span class="overlap-teams">Animation + Gaming</span>
-        <span>Africarare avatar asset pipeline</span>
+        <span>Africarare avatar pipeline</span>
         <span class="overlap-status blocked">Blocked</span>
       </div>
       <div class="overlap-row">
@@ -1767,49 +1974,49 @@ body {
   </div>
 </div>
 
-<!-- ===== RX 06: PITCH GENERATOR (Conversational) ===== -->
+<!-- RX 06: PITCH GENERATOR (Conversational) -->
 <div class="tool-pitch">
   <div class="tool-inner fade-in">
-    <div class="tool-label-p">Prescription 06 / Business Development</div>
+    <div class="tool-label-p">Prescription 06 / Business Development Drag</div>
     <div class="tool-title-p">Pitch Generator</div>
-    <div class="tool-desc-p">OpenClaw researches prospects, analyzes competitors, drafts proposals, and builds pitch decks. Your business development team focuses on relationships while AI handles the heavy lifting.</div>
+    <div class="tool-desc-p">AI handles the research. Your team focuses on relationships.</div>
 
     <div class="pitch-demo">
       <div class="chat-msg" id="c1">
         <div class="chat-sender user">Shayne</div>
-        <div class="chat-bubble">We just got an RFP from Capitec for their annual leadership conference. 400 people, hybrid format, they want something that feels different from what they have done before. Can you pull together a competitive analysis and draft the proposal structure?</div>
+        <div class="chat-bubble">We just got an RFP from Capitec for their annual leadership conference. 400 people, hybrid format. Pull together a competitive analysis and proposal structure.</div>
       </div>
       <div class="chat-msg" id="c2">
         <div class="chat-sender ai">OpenClaw</div>
-        <div class="chat-bubble">I have pulled Capitec's event history for the last three years. Their previous conferences were produced by Gearhouse and Event Architects. Key patterns: they value interactive technology, they have increased their digital component each year, and their CEO has spoken publicly about "breaking the mould" in corporate events. Here is the competitive landscape:
+        <div class="chat-bubble">Capitec's last three conferences were produced by Gearhouse and Event Architects. Their CEO has spoken publicly about "breaking the mould" in corporate events. Here is the competitive landscape:
           <table class="chat-table">
             <tr><th>Competitor</th><th>Strength</th><th>Mann Made Advantage</th></tr>
             <tr><td>Gearhouse</td><td>AV infrastructure</td><td>Creative integration, VR capability</td></tr>
             <tr><td>Event Architects</td><td>Large scale logistics</td><td>Hybrid expertise, animation, storytelling</td></tr>
             <tr><td>Kenzan Digital</td><td>Virtual events</td><td>Full spectrum: live + virtual + activation</td></tr>
           </table>
-          I recommend leading with your Hopin certified hybrid capability and the Africarare metaverse experience as a differentiator. Shall I draft the executive summary and proposed creative concept?
+          I recommend leading with your hybrid capability and the Africarare metaverse experience as a differentiator. Shall I draft the executive summary and creative concept?
         </div>
       </div>
       <div class="chat-msg" id="c3">
         <div class="chat-sender user">Shayne</div>
-        <div class="chat-bubble">Yes. And pull in the case study from the Nedbank Summit we did last year. That one had similar scale.</div>
+        <div class="chat-bubble">Yes. Pull in the Nedbank Summit case study too. Similar scale.</div>
       </div>
       <div class="chat-msg" id="c4">
         <div class="chat-sender ai">OpenClaw</div>
-        <div class="chat-bubble">Done. I have drafted a 12 page proposal with executive summary, creative concept, technical specifications, timeline, budget framework, and the Nedbank case study with metrics (4,200 virtual attendees, 98% satisfaction score, 340% social engagement increase). The proposal positions Mann Made's unique combination of live production, virtual expertise, and immersive technology as the decisive advantage. Ready for your review in Google Docs. I have also prepared a one page competitive brief for Kevin to review the pricing strategy.</div>
+        <div class="chat-bubble">Done. 12 page proposal drafted with executive summary, creative concept, technical specs, timeline, budget framework, and the Nedbank case study (4,200 virtual attendees, 98% satisfaction, 340% social engagement increase). Ready for your review in Google Docs. One page competitive brief also prepared for Kevin on pricing strategy.</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ===== CTA ===== -->
+<!-- CTA -->
 <section class="cta-section">
   <div class="fade-in">
     <div class="cta-label">Next Steps</div>
     <h2>Ready to Deploy</h2>
     <p>
-      Your OpenClaw instance is being configured specifically for Mann Made. Each capability will be tuned to your team structure, client base, vendor network, and operational rhythm. The system learns from every interaction and gets sharper every week.
+      Your OpenClaw instance is being configured for Mann Made. Each tool tuned to your team, clients, and vendors. The system learns from every interaction.
     </p>
     <div class="cta-quote">
       "It's okay to try things. It's okay to make mistakes. Fix them, learn from them, and move on."
@@ -1824,13 +2031,13 @@ body {
 </footer>
 
 <script>
-// ===== Intersection Observer for fade-in =====
+// Intersection Observer for fade-in
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 
-// ===== Glass bar animation =====
+// Glass bar animation
 const barObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -1840,7 +2047,17 @@ const barObs = new IntersectionObserver(entries => {
 }, { threshold: 0.2 });
 document.querySelectorAll('.tool-glass').forEach(el => barObs.observe(el));
 
-// ===== Brutal department bar animation =====
+// ECC progress bar animation
+const eccObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.ecc-progress-fill').forEach(b => { b.style.width = b.dataset.width + '%'; });
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('#ecc-events').forEach(el => eccObs.observe(el));
+
+// Department bar animation
 const deptObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -1850,41 +2067,7 @@ const deptObs = new IntersectionObserver(entries => {
 }, { threshold: 0.2 });
 document.querySelectorAll('#dept-grid').forEach(el => deptObs.observe(el));
 
-// ===== Terminal typing =====
-const cmds = [
-  'openclaw events.runsheet "Nedbank Summit" --export pdf',
-  'openclaw vendor.chase --overdue --auto-email',
-  'openclaw brief.status --client "Vodacom" --verbose',
-  'openclaw team.capacity --department all --week-ahead',
-  'openclaw pitch.draft --prospect "Capitec" --format proposal'
-];
-let ci = 0, chi = 0, typing = false;
-
-function typeCmd() {
-  const t = document.getElementById('typing-target');
-  if (!t) return;
-  if (chi < cmds[ci].length) {
-    t.textContent += cmds[ci][chi];
-    chi++;
-    setTimeout(typeCmd, 35 + Math.random() * 25);
-  } else {
-    setTimeout(() => {
-      t.textContent = '';
-      chi = 0;
-      ci = (ci + 1) % cmds.length;
-      setTimeout(typeCmd, 400);
-    }, 2800);
-  }
-}
-
-const termObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting && !typing) { typing = true; setTimeout(typeCmd, 800); }
-  });
-}, { threshold: 0.2 });
-document.querySelectorAll('.tool-terminal').forEach(el => termObs.observe(el));
-
-// ===== Chat animation =====
+// Chat animation
 const chatObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -1897,7 +2080,7 @@ const chatObs = new IntersectionObserver(entries => {
 }, { threshold: 0.15 });
 document.querySelectorAll('.pitch-demo').forEach(el => chatObs.observe(el));
 
-// ===== Web3 Chart =====
+// Web3 Chart
 const chartObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting && !e.target.dataset.rendered) {
@@ -1956,6 +2139,65 @@ const chartObs = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.2 });
 document.querySelectorAll('.tool-dashboard').forEach(el => chartObs.observe(el));
+
+// Revenue Chart
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.dataset.rendered) {
+      e.target.dataset.rendered = 'true';
+      const ctx = document.getElementById('revenueChart');
+      if (!ctx) return;
+      const labels = ['Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb'];
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [
+            {
+              label: 'Actual Revenue',
+              data: [4.2, 3.8, 5.1, 4.9, 6.2, 5.5, 7.1, 6.8, 5.9, 8.2, 6.1, null],
+              backgroundColor: 'rgba(0,212,255,0.6)',
+              borderRadius: 4,
+            },
+            {
+              label: 'Forecast',
+              data: [null, null, null, null, null, null, null, null, null, null, null, 7.4],
+              backgroundColor: 'rgba(139,92,246,0.4)',
+              borderRadius: 4,
+              borderWidth: 2,
+              borderColor: 'rgba(139,92,246,0.6)',
+              borderDash: [4,4],
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: { color: 'rgba(255,255,255,0.4)', font: { family: "'IBM Plex Mono',monospace", size: 10 } }
+            }
+          },
+          scales: {
+            x: {
+              ticks: { color: 'rgba(255,255,255,0.3)', font: { family: "'IBM Plex Mono',monospace", size: 9 } },
+              grid: { color: 'rgba(255,255,255,0.04)' }
+            },
+            y: {
+              ticks: {
+                color: 'rgba(255,255,255,0.3)',
+                font: { family: "'IBM Plex Mono',monospace", size: 9 },
+                callback: v => 'R' + v + 'M'
+              },
+              grid: { color: 'rgba(255,255,255,0.04)' }
+            }
+          }
+        }
+      });
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.revenue-chart-wrap').forEach(el => revObs.observe(el));
 </script>
 
 </body>
